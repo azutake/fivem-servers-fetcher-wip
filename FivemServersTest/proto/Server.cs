@@ -11,9 +11,9 @@ namespace FivemServersTest.proto
 	public class Server
 	{
 		[ProtoMember(1)]
-		public required string EndPoint { get; set; }
+		public string EndPoint { get; set; }
 
 		[ProtoMember(2)]
-		public required ServerData Data { get; set; }
+		public ServerData Data { get; set; }
 	}
 }

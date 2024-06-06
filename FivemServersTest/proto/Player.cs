@@ -11,18 +11,18 @@ namespace FivemServersTest.proto
 	public class Player
 	{
 		[ProtoMember(1)]
-		public required string Name { get; set;}
+		public string Name { get; set;}
 
 		[ProtoMember(2)]
-		public required string[] Identifiers { get; set; }
+		public string[] Identifiers { get; set; }
 
 		[ProtoMember(3)]
-		public required string Endpoint { get; set; }
+		public string Endpoint { get; set; }
 
 		[ProtoMember(4)]
-		public required int Ping { get; set; }
+		public int Ping { get; set; }
 
 		[ProtoMember(5)]
-		public required int Id { get; set; }
+		public int Id { get; set; }
 	}
 }

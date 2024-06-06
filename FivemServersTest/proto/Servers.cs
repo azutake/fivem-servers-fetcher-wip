@@ -11,6 +11,6 @@ namespace FivemServersTest.proto
 	public class ServersData
 	{
 		[ProtoMember(1)]
-		public required Server[] Servers { get; set; }
+		public Server[] Servers { get; set; }
 	}
 }

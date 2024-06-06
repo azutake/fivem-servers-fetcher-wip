@@ -11,12 +11,12 @@ namespace FivemServersTest.proto
 	public class ServerIcon
 	{
 		[ProtoMember(1)]
-		public required string EndPoint { get; set; }
+		public string EndPoint { get; set; }
 
 		[ProtoMember(2)]
-		public required byte[] Icon { get; set; }
+		public byte[] Icon { get; set; }
 
 		[ProtoMember(3)]
-		public required int IconVersion { get; set; }
+		public int IconVersion { get; set; }
 	}
 }

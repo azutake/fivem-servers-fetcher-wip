@@ -11,6 +11,6 @@ namespace FivemServersTest.proto
 	public class ServerIconsData
 	{
 		[ProtoMember(1)]
-		public required ServerIcon Icons { get; set; }
+		public ServerIcon Icons { get; set; }
 	}
 }
