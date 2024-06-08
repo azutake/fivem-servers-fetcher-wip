@@ -35,23 +35,28 @@ namespace FivemServersTest
 
 			var i = 0;
 
-			foreach (var server in servers)
+			var filtered = servers.Where(s => s?.Data?.GameType?.ToUpper() == "Freeroam".ToUpper()).ToArray();
+
+			var httpClientPool = new HttpClientPool(filtered.Select(f => $"https://servers-frontend.fivem.net/api/servers/single/{f.EndPoint}"));
+			httpClientPool.RequestCompleted += async (url, response) =>
 			{
-				using (var request = new HttpRequestMessage(HttpMethod.Get, new Uri($"https://servers-frontend.fivem.net/api/servers/single/{server.EndPoint}")))
-				using (var response = await httpClient.SendAsync(request))
+				if (response != null && response.IsSuccessStatusCode)
 				{
-					if (response.StatusCode == HttpStatusCode.OK)
-					{
-						using var content = response.Content;
-						var json = await content.ReadAsStringAsync();
-						var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
-						var hoge = JsonSerializer.Deserialize<Server>(json, options);
-						Debug.WriteLine($"Processing {server.EndPoint}... ({++i}/{servers.Count()})");
-						if (hoge == null) continue;
-						;
-					}
+					var endpoint = url.Replace("https://servers-frontend.fivem.net/api/servers/single/", "");
+					using var content = response.Content;
+					var json = await content.ReadAsStringAsync();
+					var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+					var hoge = JsonSerializer.Deserialize<Server>(json, options);
+					Debug.WriteLine($"Processing {endpoint}... ({++i}/{filtered.Length})");
+					if (hoge == null) return;
 				}
-			}
+				else
+				{
+					Console.WriteLine($"Request to {url} failed.");
+				}
+			};
+
+			await httpClientPool.WaitForCompletion();
 		}
 	}
 }
